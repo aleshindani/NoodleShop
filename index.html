@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>NoodleShop - Кино и сериалы</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary-color: #ff0000;
+				--secondary-color: #000000;
+				--accent-color: #ff3333;
+				--text-color: #ffffff;
+				--dark-gray: #1a1a1a;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				font-family: 'Montserrat', sans-serif;
+			}
+
+			body {
+				background-color: var(--secondary-color);
+				color: var(--text-color);
+				overflow-x: hidden;
+				position: relative;
+			}
+
+			header {
+				background: linear-gradient(
+					135deg,
+					var(--secondary-color) 0%,
+					var(--dark-gray) 100%
+				);
+				padding: 20px 0;
+				box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
+				position: relative;
+				z-index: 100;
+			}
+
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 20px;
+			}
+
+			.header-content {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.logo-container {
+				display: flex;
+				align-items: center;
+				animation: fadeInDown 1s ease;
+				cursor: pointer;
+			}
+
+			.logo {
+				width: 50px;
+				height: 50px;
+				margin-right: 15px;
+				background: var(--primary-color);
+				border-radius: 50%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-weight: 700;
+				font-size: 24px;
+				color: var(--secondary-color);
+				box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+			}
+
+			.logo-text {
+				font-size: 28px;
+				font-weight: 700;
+				background: linear-gradient(to right, var(--primary-color), #ff6666);
+				-webkit-background-clip: text;
+				background-clip: text;
+				color: transparent;
+				text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+			}
+
+			nav ul {
+				display: flex;
+				list-style: none;
+			}
+
+			nav ul li {
+				margin-left: 30px;
+				position: relative;
+			}
+
+			nav ul li a {
+				color: var(--text-color);
+				text-decoration: none;
+				font-weight: 600;
+				font-size: 16px;
+				transition: all 0.3s ease;
+				position: relative;
+				padding: 5px 10px;
+				border-radius: 5px;
+			}
+
+			nav ul li a:hover {
+				color: var(--primary-color);
+				background: rgba(255, 0, 0, 0.1);
+			}
+
+			nav ul li a::after {
+				content: '';
+				position: absolute;
+				width: 0;
+				height: 2px;
+				background: var(--primary-color);
+				bottom: -5px;
+				left: 0;
+				transition: width 0.3s ease;
+			}
+
+			nav ul li a:hover::after {
+				width: 100%;
+			}
+
+			.hero {
+				height: 80vh;
+				display: flex;
+				align-items: center;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.hero::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: radial-gradient(
+					circle,
+					rgba(255, 0, 0, 0.1) 0%,
+					rgba(0, 0, 0, 0.9) 70%
+				);
+				z-index: -1;
+			}
+
+			.hero-content {
+				max-width: 600px;
+				animation: fadeInLeft 1s ease;
+			}
+
+			.hero h1 {
+				font-size: 48px;
+				margin-bottom: 20px;
+				line-height: 1.2;
+			}
+
+			.hero h1 span {
+				color: var(--primary-color);
+				text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+			}
+
+			.hero p {
+				font-size: 18px;
+				margin-bottom: 30px;
+				line-height: 1.6;
+				opacity: 0.9;
+			}
+
+			.search-container {
+				position: relative;
+				margin-bottom: 40px;
+				animation: fadeInUp 1s ease 0.3s forwards;
+				opacity: 0;
+			}
+
+			.search-input {
+				width: 100%;
+				padding: 15px 20px;
+				border-radius: 50px;
+				border: none;
+				background-color: rgba(255, 255, 255, 0.1);
+				backdrop-filter: blur(10px);
+				color: var(--text-color);
+				font-size: 16px;
+				outline: none;
+				border: 1px solid rgba(255, 0, 0, 0.3);
+				transition: all 0.3s ease;
+			}
+
+			.search-input:focus {
+				border-color: var(--primary-color);
+				box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+			}
+
+			.search-btn {
+				position: absolute;
+				right: 10px;
+				top: 7px;
+				background: linear-gradient(
+					45deg,
+					var(--primary-color),
+					var(--accent-color)
+				);
+				border: none;
+				color: white;
+				padding: 10px 25px;
+				border-radius: 50px;
+				cursor: pointer;
+				font-weight: 600;
+				transition: all 0.3s ease;
+			}
+
+			.search-btn:hover {
+				transform: scale(1.05);
+				box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+			}
+
+			.video-container {
+				margin: 80px 0;
+				animation: fadeIn 1.5s ease;
+			}
+
+			.video-wrapper {
+				width: 100%;
+				top: 10px;
+				height: 500px;
+				background-color: var(--dark-gray);
+				border-radius: 10px;
+				position: relative;
+				overflow: hidden;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+				border: 1px solid rgba(255, 0, 0, 0.2);
+			}
+
+			#main-video {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			.video-overlay {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(
+					to bottom,
+					rgba(0, 0, 0, 0.3),
+					rgba(0, 0, 0, 0.7)
+				);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				opacity: 1;
+				transition: opacity 0.3s ease;
+			}
+
+			.video-wrapper.playing .video-overlay {
+				opacity: 0;
+			}
+
+			.play-btn {
+				width: 80px;
+				height: 80px;
+				background: rgba(255, 0, 0, 0.7);
+				border-radius: 50%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+				transition: all 0.3s ease;
+			}
+
+			.play-btn:hover {
+				transform: scale(1.1);
+				background: rgba(255, 0, 0, 0.9);
+			}
+
+			.play-btn::after {
+				content: '';
+				width: 0;
+				height: 0;
+				border-top: 15px solid transparent;
+				border-left: 25px solid white;
+				border-bottom: 15px solid transparent;
+				margin-left: 5px;
+			}
+
+			.movie-posters {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+				gap: 30px;
+				margin: 40px 0;
+			}
+
+			.movie-card {
+				background: rgba(255, 255, 255, 0.05);
+				border-radius: 10px;
+				overflow: hidden;
+				transition: all 0.3s ease;
+				cursor: pointer;
+				position: relative;
+			}
+
+			.movie-card:hover {
+				transform: translateY(-10px);
+				box-shadow: 0 10px 25px rgba(255, 0, 0, 0.2);
+			}
+
+			.movie-poster {
+				width: 100%;
+
+				object-fit: cover;
+			}
+
+			.movie-info {
+				padding: 15px;
+			}
+
+			.movie-title {
+				font-size: 18px;
+				margin-bottom: 5px;
+				color: var(--primary-color);
+			}
+
+			.movie-premiere {
+				font-size: 14px;
+				opacity: 0.8;
+			}
+
+			.features {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 30px;
+				margin: 80px 0;
+			}
+
+			.feature-card {
+				background: rgba(255, 255, 255, 0.05);
+				border-radius: 10px;
+				padding: 30px;
+				transition: all 0.3s ease;
+				border: 1px solid rgba(255, 0, 0, 0.1);
+				backdrop-filter: blur(5px);
+				position: relative;
+				overflow: hidden;
+			}
+
+			.feature-card::before {
+				content: '';
+				position: absolute;
+				top: -50%;
+				left: -50%;
+				width: 200%;
+				height: 200%;
+				background: linear-gradient(
+					to bottom right,
+					transparent 45%,
+					rgba(255, 0, 0, 0.1) 50%,
+					transparent 55%
+				);
+				animation: shine 6s infinite;
+				opacity: 0;
+				transition: opacity 0.3s ease;
+			}
+
+			.feature-card:hover::before {
+				opacity: 1;
+			}
+
+			.feature-card:hover {
+				transform: translateY(-10px);
+				box-shadow: 0 10px 25px rgba(255, 0, 0, 0.2);
+				border-color: rgba(255, 0, 0, 0.3);
+			}
+
+			.feature-icon {
+				font-size: 40px;
+				color: var(--primary-color);
+				margin-bottom: 20px;
+				transition: all 0.3s ease;
+			}
+
+			.feature-card:hover .feature-icon {
+				transform: scale(1.2);
+			}
+
+			.feature-card h3 {
+				font-size: 22px;
+				margin-bottom: 15px;
+				position: relative;
+				display: inline-block;
+			}
+
+			.feature-card h3::after {
+				content: '';
+				position: absolute;
+				width: 0;
+				height: 2px;
+				background: var(--primary-color);
+				bottom: -5px;
+				left: 0;
+				transition: width 0.3s ease;
+			}
+
+			.feature-card:hover h3::after {
+				width: 100%;
+			}
+
+			.feature-card p {
+				opacity: 0.8;
+				line-height: 1.6;
+				transition: all 0.3s ease;
+			}
+
+			.feature-card:hover p {
+				opacity: 1;
+			}
+
+			footer {
+				background: linear-gradient(
+					135deg,
+					var(--dark-gray) 0%,
+					var(--secondary-color) 100%
+				);
+				padding: 50px 0 20px;
+				margin-top: 80px;
+			}
+
+			.footer-content {
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				margin-bottom: 40px;
+			}
+
+			.footer-column {
+				flex: 1;
+				min-width: 200px;
+				margin-bottom: 30px;
+			}
+
+			.footer-column h3 {
+				font-size: 18px;
+				margin-bottom: 20px;
+				color: var(--primary-color);
+				position: relative;
+				display: inline-block;
+			}
+
+			.footer-column h3::after {
+				content: '';
+				position: absolute;
+				width: 50%;
+				height: 2px;
+				background: var(--primary-color);
+				bottom: -5px;
+				left: 0;
+				transition: width 0.3s ease;
+			}
+
+			.footer-column:hover h3::after {
+				width: 100%;
+			}
+
+			.footer-column ul {
+				list-style: none;
+			}
+
+			.footer-column ul li {
+				margin-bottom: 10px;
+				transform: translateX(0);
+				transition: transform 0.3s ease;
+			}
+
+			.footer-column ul li:hover {
+				transform: translateX(5px);
+			}
+
+			.footer-column ul li a {
+				color: var(--text-color);
+				text-decoration: none;
+				opacity: 0.8;
+				transition: all 0.3s ease;
+				display: block;
+				padding: 5px 0;
+			}
+
+			.footer-column ul li a:hover {
+				opacity: 1;
+				color: var(--primary-color);
+			}
+
+			.copyright {
+				text-align: center;
+				padding-top: 20px;
+				border-top: 1px solid rgba(255, 255, 255, 0.1);
+				opacity: 0.7;
+			}
+
+			/* Модальные окна */
+			.modal {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.8);
+				z-index: 1000;
+				justify-content: center;
+				align-items: center;
+				animation: fadeIn 0.3s ease;
+			}
+
+			.modal-content {
+				background: var(--dark-gray);
+				padding: 30px;
+				border-radius: 10px;
+				max-width: 600px;
+				width: 90%;
+				position: relative;
+				box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+				border: 1px solid var(--primary-color);
+				animation: scaleIn 0.3s ease;
+			}
+
+			.close-modal {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				font-size: 24px;
+				cursor: pointer;
+				color: var(--primary-color);
+			}
+
+			.blocked-content {
+				text-align: center;
+				padding: 20px;
+			}
+
+			.blocked-content img {
+				max-width: 100%;
+				height: auto;
+				border-radius: 5px;
+				margin-bottom: 20px;
+			}
+
+			/* Ачивки */
+			.achievement {
+				position: fixed;
+				bottom: 20px;
+				right: -300px;
+				background: linear-gradient(
+					45deg,
+					var(--primary-color),
+					var(--accent-color)
+				);
+				padding: 15px 20px;
+				border-radius: 5px;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+				transition: right 0.5s ease;
+				z-index: 1000;
+			}
+
+			.achievement.show {
+				right: 20px;
+			}
+
+			/* Секретные элементы */
+			.secret {
+				position: absolute;
+				width: 10px;
+				height: 10px;
+				background: transparent;
+				z-index: 100;
+			}
+
+			/* Анимации */
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+				}
+				to {
+					opacity: 1;
+				}
+			}
+
+			@keyframes scaleIn {
+				from {
+					transform: scale(0.8);
+					opacity: 0;
+				}
+				to {
+					transform: scale(1);
+					opacity: 1;
+				}
+			}
+
+			@keyframes fadeInDown {
+				from {
+					opacity: 0;
+					transform: translateY(-20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@keyframes fadeInLeft {
+				from {
+					opacity: 0;
+					transform: translateX(-20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateX(0);
+				}
+			}
+
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@keyframes shine {
+				from {
+					transform: translateX(-50%) translateY(-50%) rotate(45deg);
+				}
+				to {
+					transform: translateX(50%) translateY(50%) rotate(45deg);
+				}
+			}
+
+			@keyframes float {
+				0% {
+					transform: translateY(0px);
+				}
+				50% {
+					transform: translateY(-10px);
+				}
+				100% {
+					transform: translateY(0px);
+				}
+			}
+
+			/* Анимация пульсации для логотипа */
+			@keyframes pulse {
+				0% {
+					box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+				}
+				70% {
+					box-shadow: 0 0 0 15px rgba(255, 0, 0, 0);
+				}
+				100% {
+					box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+				}
+			}
+
+			.logo {
+				animation: pulse 2s infinite, float 3s ease-in-out infinite;
+			}
+
+			/* Адаптивность */
+			@media (max-width: 768px) {
+				.header-content {
+					flex-direction: column;
+				}
+
+				nav ul {
+					margin-top: 20px;
+					flex-wrap: wrap;
+					justify-content: center;
+				}
+
+				nav ul li {
+					margin: 0 10px 10px;
+				}
+
+				.hero {
+					height: auto;
+					padding: 80px 0;
+					text-align: center;
+				}
+
+				.hero-content {
+					max-width: 100%;
+				}
+
+				.hero h1 {
+					font-size: 36px;
+				}
+
+				.video-wrapper {
+					height: 300px;
+				}
+
+				.movie-posters {
+					grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+					width: 300;
+				}
+
+				.movie-poster {
+					width: 100%;
+
+					object-fit: cover;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Секретные элементы для ачивок -->
+		<div
+			class="secret"
+			style="top: 100px; left: 50px"
+			onclick="showAchievement('Найдена первая закладка!')"
+		></div>
+		<div
+			class="secret"
+			style="bottom: 200px; right: 100px"
+			onclick="showAchievement('Секретная зона обнаружена!')"
+		></div>
+		<div
+			class="secret"
+			style="top: 300px; right: 200px"
+			onclick="showAchievement('Вы нашли скрытый артефакт!')"
+		></div>
+
+		<!-- Ачивка -->
+		<div class="achievement" id="achievement">
+			<div class="achievement-text">Ачивка получена!</div>
+		</div>
+
+		<!-- Модальное окно для блокировки контента -->
+		<div class="modal" id="blockedModal">
+			<div class="modal-content">
+				<span class="close-modal" onclick="closeModal('blockedModal')"
+					>&times;</span
+				>
+				<div class="blocked-content">
+					<img
+						src="/mfterial/photo_2025-07-31_23-33-13.jpg"
+						alt="Заблокированный контент"
+					/>
+					<h2>Контент заблокирован</h2>
+					<p>Михаилом Ворохобовым</p>
+				</div>
+			</div>
+		</div>
+
+		<header>
+			<div class="container">
+				<div class="header-content">
+					<div
+						class="logo-container"
+						onclick="window.location.href='index.html'"
+					>
+						<div class="logo">N</div>
+						<div class="logo-text">NoodleShop</div>
+					</div>
+					<nav>
+						<ul>
+							<li><a href="index.html">Главная</a></li>
+							<li><a href="catalog.html">Каталог</a></li>
+							<li><a href="popular.html">Популярное</a></li>
+							<li><a href="about.html">О нас</a></li>
+							<li><a href="contacts.html">Контакты</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+
+		<section class="hero">
+			<div class="container">
+				<div class="hero-content">
+					<h1>Найдите лучший <span>видео контент</span> на NoodleShop</h1>
+					<p>
+						Откройте для себя мир высококачественных видео. Тысячи часов
+						контента на любой вкус. Ищите, смотрите, наслаждайтесь.
+					</p>
+
+					<div class="search-container">
+						<input
+							type="text"
+							class="search-input"
+							id="searchInput"
+							placeholder="Поиск видео..."
+						/>
+						<button class="search-btn" onclick="searchContent()">Найти</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="video-container">
+			<div class="container">
+				<h2>Рекомендуемое видео</h2>
+				<div class="video-wrapper" id="videoPlayer">
+					<video
+						id="main-video"
+						poster="https://via.placeholder.com/1200x675/1a1a1a/ff0000?text=NoodleShop+Video"
+					>
+						<source src="material/фильм.mp4" type="video/mp4" />
+						Ваш браузер не поддерживает видео тег.
+					</video>
+					<div class="video-overlay">
+						<div class="play-btn" id="playBtn"></div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="container">
+			<h2>Скоро в кино</h2>
+			<div class="movie-posters">
+				<div class="movie-card" onclick="playTrailer()">
+					<img
+						src="/mfterial/photo_2025-08-01_00-07-41.jpg"
+						alt="Поворот не туда"
+						class="movie-poster"
+					/>
+					<div class="movie-info">
+						<h3 class="movie-title">Поворот не туда - Поворот в Борковку</h3>
+						<p class="movie-premiere">Премьера: 32 июля</p>
+					</div>
+				</div>
+
+				<div class="movie-card" onclick="playTrailer()">
+					<img src="/mfterial/40.png" alt="Анонс" class="movie-poster" />
+					<div class="movie-info">
+						<h3 class="movie-title">Поход в антоповку</h3>
+						<p class="movie-premiere">Премьера: 40 августа</p>
+					</div>
+				</div>
+
+				<div class="movie-card" onclick="playTrailer()">
+					<img
+						src="/mfterial/38.png"
+						alt="Еще один фильм"
+						class="movie-poster"
+					/>
+					<div class="movie-info">
+						<h3 class="movie-title">Запасный пруд</h3>
+						<p class="movie-premiere">Премьера: 38 ноября</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="features">
+			<div class="container">
+				<div class="features">
+					<div
+						class="feature-card"
+						onclick="window.location.href='catalog.html'"
+					>
+						<div class="feature-icon">🎥</div>
+						<h3>Огромная библиотека</h3>
+						<p>
+							Доступ к тысячам видео различной тематики. Всегда найдется что-то
+							интересное именно для вас.
+						</p>
+					</div>
+
+					<div
+						class="feature-card"
+						onclick="window.location.href='popular.html'"
+					>
+						<div class="feature-icon">⚡</div>
+						<h3>Быстрый поиск</h3>
+						<p>
+							Мощная система поиска, которая поможет вам найти нужное видео за
+							считанные секунды.
+						</p>
+					</div>
+
+					<div class="feature-card" onclick="window.location.href='about.html'">
+						<div class="feature-icon">🔒</div>
+						<h3>Безопасность</h3>
+						<p>
+							Все видео проверяются на безопасность и соответствие нашим высоким
+							стандартам качества.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<footer>
+			<div class="container">
+				<div class="footer-content">
+					<div class="footer-column">
+						<h3>NoodleShop</h3>
+						<p>
+							Лучший поиск видео контента в интернете. Находите то, что вам
+							нравится.
+						</p>
+					</div>
+
+					<div class="footer-column">
+						<h3>Навигация</h3>
+						<ul>
+							<li><a href="index.html">Главная</a></li>
+							<li><a href="catalog.html">Каталог</a></li>
+							<li><a href="popular.html">Популярное</a></li>
+							<li><a href="about.html">О нас</a></li>
+						</ul>
+					</div>
+
+					<div class="footer-column">
+						<h3>Помощь</h3>
+						<ul>
+							<li><a href="about.html">FAQ</a></li>
+							<li><a href="support.html">Поддержка</a></li>
+							<li><a href="terms.html">Условия использования</a></li>
+							<li><a href="privacy.html">Политика конфиденциальности</a></li>
+						</ul>
+					</div>
+
+					<div class="footer-column">
+						<h3>Контакты</h3>
+						<ul>
+							<li>
+								<a href="mailto:info@nodleshop.com"
+									>Email: info@nodleshop.com</a
+								>
+							</li>
+							<li>
+								<a href="tel:+79057756441">Телефон: +7 (905) 775-64-41</a>
+							</li>
+							<li><a href="#">Социальные сети</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="copyright">
+					<p>&copy; 2025 NoodleShop. Все права защищены.</p>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			// Видео плеер
+			const video = document.getElementById('main-video')
+			const playBtn = document.getElementById('play-btn')
+			const videoWrapper = document.getElementById('videoPlayer')
+
+			playBtn.addEventListener('click', function () {
+				if (video.paused) {
+					video.play()
+					videoWrapper.classList.add('playing')
+				} else {
+					video.pause()
+					videoWrapper.classList.remove('playing')
+				}
+			})
+
+			video.addEventListener('click', function () {
+				if (video.paused) {
+					video.play()
+					videoWrapper.classList.add('playing')
+				} else {
+					video.pause()
+					videoWrapper.classList.remove('playing')
+				}
+			})
+
+			// Поиск контента
+			function searchContent() {
+				const searchInput = document.getElementById('searchInput')
+				if (searchInput.value.trim() !== '') {
+					document.getElementById('blockedModal').style.display = 'flex'
+				}
+			}
+
+			// Воспроизведение трейлера
+			function playTrailer() {
+				videoWrapper.scrollIntoView({ behavior: 'smooth' })
+				video.play()
+				videoWrapper.classList.add('playing')
+			}
+
+			// Модальные окна
+			function closeModal(modalId) {
+				document.getElementById(modalId).style.display = 'none'
+			}
+
+			// Ачивки
+			function showAchievement(text) {
+				const achievement = document.getElementById('achievement')
+				achievement.querySelector('.achievement-text').textContent = text
+				achievement.classList.add('show')
+
+				setTimeout(() => {
+					achievement.classList.remove('show')
+				}, 3000)
+			}
+
+			// Секретные элементы
+			document.querySelectorAll('.secret').forEach(secret => {
+				secret.addEventListener('mouseover', function () {
+					this.style.cursor = 'pointer'
+				})
+			})
+
+			// Плавная прокрутка для всех ссылок
+			document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+				anchor.addEventListener('click', function (e) {
+					e.preventDefault()
+
+					document.querySelector(this.getAttribute('href')).scrollIntoView({
+						behavior: 'smooth',
+					})
+				})
+			})
+
+			// Анимация при скролле
+			const animateOnScroll = function () {
+				const elements = document.querySelectorAll(
+					'.feature-card, .video-container, .footer-column'
+				)
+
+				elements.forEach(element => {
+					const elementPosition = element.getBoundingClientRect().top
+					const screenPosition = window.innerHeight / 1.3
+
+					if (elementPosition < screenPosition) {
+						element.style.opacity = '1'
+						element.style.transform = 'translateY(0)'
+					}
+				})
+			}
+
+			window.addEventListener('scroll', animateOnScroll)
+			animateOnScroll() // Инициализация при загрузке
+		</script>
+	</body>
+</html>
